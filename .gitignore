@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+backend/ecotrack.db
+backend/ml/data/
+backend/ml/models/
+# Node
+node_modules/
+frontend/dist/
