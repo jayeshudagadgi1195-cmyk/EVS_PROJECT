@@ -100,7 +100,7 @@ flowchart LR
 5. **Habit tracking over time** — monthly history and forecasts help users notice rising trends early and keep reductions going, which matters more than one-off changes.
 
 ## 7. Prototype Link
-- **Deployed website:** _[add your deployed URL here]_
-- **GitHub repository:** _[add your repository URL here]_
+- **Deployed website:** https://jayeshudagadgi1195-cmyk.github.io/EVS_PROJECT/ (browser version; the trained Random Forest runs in the browser)
+- **GitHub repository:** https://github.com/jayeshudagadgi1195-cmyk/EVS_PROJECT
 
 (Run locally by following the instructions in `README.md`.)

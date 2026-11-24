@@ -24,6 +24,18 @@ A full-stack college environmental-technology project. Users log a month of trav
 - **Backend:** Python 3.11+, Flask, Flask-CORS, SQLite
 - **ML:** scikit-learn `RandomForestRegressor`, pandas, NumPy, joblib
 
+## Live online demo (GitHub Pages)
+**https://jayeshudagadgi1195-cmyk.github.io/EVS_PROJECT/**
+
+GitHub Pages can only host static files, so the online demo runs without the Python server:
+- The calculator, advisor, simulator and insights use a JavaScript copy of the backend logic (`frontend/src/lib/engine.js`), which gives the same numbers as the Python version.
+- Predictions come from the **same trained Random Forest**. `backend/ml/export_web.py` exports its 300 trees to `frontend/public/data/model.json`, and the browser walks those trees. Its predictions match scikit-learn's exactly.
+- Records are saved in your browser's localStorage instead of SQLite, so each visitor has their own copy of the demo data.
+
+The site rebuilds automatically on every push to `main` (`.github/workflows/deploy-pages.yml`). If you retrain the model, run `python -m ml.export_web` inside `backend` and commit the updated files in `frontend/public/data/`.
+
+The full version (Flask + SQLite) runs locally as described below.
+
 ---
 
 ## Run it on Windows (PowerShell, VS Code)
