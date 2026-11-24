@@ -5,7 +5,7 @@ import {
   ArrowRight, BarChart3, BookOpen, BrainCircuit, Bus, Calculator, Car, CheckCircle2, Database, Github, History, Leaf,
   LineChart, Lock, PlugZap, ServerOff, Sparkles, TrainFront, Bike, TrendingDown, Zap,
 } from 'lucide-react'
-import { api } from '../lib/api'
+import { api, IS_STATIC } from '../lib/api'
 import { useApi } from '../hooks/useApi'
 import { kg, monthLabel } from '../lib/format'
 import { Logo, LogoMark } from '../components/ui/Logo'
@@ -84,7 +84,7 @@ function Hero({ onStart, onExplore }) {
           </motion.div>
           <motion.ul initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }}
             className="mt-9 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-zinc-500">
-            {['Published emission factors', 'Real Random Forest model', 'Runs 100% locally'].map((t) => (
+            {['Published emission factors', 'Real Random Forest model', IS_STATIC ? 'Runs in your browser' : 'Runs 100% locally'].map((t) => (
               <li key={t} className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-leaf-400" />{t}</li>
             ))}
           </motion.ul>
@@ -262,7 +262,7 @@ function OfflineNote({ what }) {
   return (
     <div className="flex flex-col items-center justify-center gap-3 py-12 text-center">
       <ServerOff className="h-6 w-6 text-zinc-500" />
-      <p className="max-w-xs text-sm text-zinc-500">Start the backend (<span className="font-mono text-zinc-400">backend\run.ps1</span>) to see {what}.</p>
+      <p className="max-w-xs text-sm text-zinc-500">{IS_STATIC ? <>Could not load {what}. Check your connection and reload.</> : <>Start the backend (<span className="font-mono text-zinc-400">backend\run.ps1</span>) to see {what}.</>}</p>
     </div>
   )
 }
@@ -369,7 +369,7 @@ function ImpactSection() {
             {[
               { icon: PlugZap, title: '1 kWh of grid power in India', value: grid ? `${grid.factor_value} kg CO₂` : '—', note: grid ? `CEA CO₂ Baseline Database, ${grid.publication_year}` : '' },
               { icon: Leaf, title: 'One 14.2 kg LPG cylinder', value: lpg ? `${(lpg.factor_value * 14.2).toFixed(1)} kg CO₂` : '—', note: 'Derived from IPCC 2006 default factors' },
-              { icon: Database, title: 'Your data, your device', value: 'Local SQLite', note: 'No accounts, no cloud, no tracking' },
+              { icon: Database, title: 'Your data, your device', value: IS_STATIC ? 'Browser storage' : 'Local SQLite', note: 'No accounts, no cloud, no tracking' },
             ].map(({ icon: Icon, title, value, note }, i) => (
               <motion.div key={title} {...fadeUp} transition={{ ...fadeUp.transition, delay: i * 0.08 }} className="card flex items-center gap-4 p-5">
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-lime-400/20 bg-lime-400/10 text-lime-300"><Icon className="h-5 w-5" /></span>
@@ -479,7 +479,7 @@ function Footer() {
       </div>
       <div className="mx-auto mt-10 flex max-w-7xl flex-col gap-2 border-t border-white/[0.05] pt-6 text-xs text-zinc-600 sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} EcoTrack AI · Built with React, Flask, SQLite & scikit-learn</p>
-        <p className="flex items-center gap-1.5"><Github className="h-3.5 w-3.5" /> Repository link: add yours in ASSIGNMENT.md</p>
+        <p className="flex items-center gap-1.5"><Github className="h-3.5 w-3.5" /> <a href="https://github.com/jayeshudagadgi1195-cmyk/EVS_PROJECT" className="hover:text-white">Source code on GitHub</a></p>
       </div>
     </footer>
   )

@@ -73,7 +73,7 @@ export default function HistoryPage() {
         description="Every saved calculation, with trends, month-to-month comparison and CSV export."
         actions={<>
           <Button variant="secondary" size="sm" icon={Database} loading={restoring} onClick={restore}>Restore demo data</Button>
-          <a href={api.exportUrl()} download><Button size="sm" icon={Download} disabled={!months.length}>Export CSV</Button></a>
+          <a href={api.exportUrl()} download="ecotrack_records.csv"><Button size="sm" icon={Download} disabled={!months.length}>Export CSV</Button></a>
         </>} />
 
       {loading && !data ? <PageSkeleton /> : error ? <ErrorState error={error} onRetry={reload} /> : !months.length ? (

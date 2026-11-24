@@ -5,7 +5,7 @@ import {
   Activity, ArrowRight, BrainCircuit, CalendarRange, Database, Download, Flame, Info, Leaf, Sparkles, TrendingDown,
   TrendingUp, Zap,
 } from 'lucide-react'
-import { api } from '../lib/api'
+import { api, IS_STATIC } from '../lib/api'
 import { useApi } from '../hooks/useApi'
 import { CATEGORY_META, kg, monthLabel, pct, timeAgo, tonnes } from '../lib/format'
 import { Badge, Button, Card, EmptyState, ErrorState, PageHeader, PageSkeleton, cx } from '../components/ui/Primitives'
@@ -61,9 +61,9 @@ export default function Dashboard() {
       <PageHeader
         eyebrow={`Overview · ${monthLabel(kpis.monthly_month)}`}
         title={`Welcome back, ${data.user.display_name}`}
-        description="Every figure below is calculated from the records saved in your local database."
+        description={`Every figure below is calculated from the records saved in ${IS_STATIC ? 'this browser' : 'your local database'}.`}
         actions={<>
-          <a href={api.exportUrl()} download><Button variant="secondary" size="sm" icon={Download}>Export CSV</Button></a>
+          <a href={api.exportUrl()} download="ecotrack_records.csv"><Button variant="secondary" size="sm" icon={Download}>Export CSV</Button></a>
           <Button size="sm" variant="secondary" icon={Sparkles} onClick={() => navigate('/app/advisor')}>Reduce emissions</Button>
         </>}
       />

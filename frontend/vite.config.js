@@ -2,7 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // During development every /api request is forwarded to the Flask backend.
+// VITE_BASE is set to /EVS_PROJECT/ by the GitHub Pages workflow; '/' for local use.
 export default defineConfig({
+  base: process.env.VITE_BASE || '/',
   plugins: [react()],
   build: {
     chunkSizeWarningLimit: 700,

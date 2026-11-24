@@ -1,5 +1,7 @@
 // Central API service. Every request to the Flask backend goes through here.
 // In development Vite forwards /api to http://127.0.0.1:5000 (see vite.config.js).
+import { localApi, setErrorClass } from './localApi'
+
 const BASE = import.meta.env.VITE_API_URL || '/api'
 
 export class ApiError extends Error {
@@ -32,7 +34,7 @@ async function request(path, { method = 'GET', body } = {}) {
   return data
 }
 
-export const api = {
+const flaskApi = {
   health: () => request('/health'),
   dashboard: () => request('/dashboard'),
   calculate: (activity) => request('/calculate', { method: 'POST', body: activity }),
@@ -50,3 +52,8 @@ export const api = {
   factors: () => request('/emission-factors'),
   exportUrl: () => `${BASE}/export`,
 }
+
+// STATIC build (GitHub Pages): no Python server exists, so the same logic runs in the browser.
+export const IS_STATIC = import.meta.env.VITE_STATIC === 'true'
+setErrorClass(ApiError)
+export const api = IS_STATIC ? localApi : flaskApi

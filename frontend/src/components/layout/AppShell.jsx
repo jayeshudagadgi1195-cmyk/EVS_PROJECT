@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import { Logo } from '../ui/Logo'
 import { Button, cx } from '../ui/Primitives'
-import { api } from '../../lib/api'
+import { api, IS_STATIC } from '../../lib/api'
 
 export const NAV = [
   { to: '/app/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -33,7 +33,7 @@ function useBackendStatus() {
 function StatusPill({ status }) {
   const map = {
     checking: ['bg-zinc-500', 'Connecting…'],
-    online: ['bg-leaf-400', 'API online'],
+    online: ['bg-leaf-400', IS_STATIC ? 'Running in browser' : 'API online'],
     'no-model': ['bg-amber-400', 'Model missing'],
     offline: ['bg-red-400', 'API offline'],
   }
@@ -77,10 +77,12 @@ function SidebarContent({ onNavigate, status }) {
       </nav>
       <div className="m-3 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4">
         <div className="flex items-center gap-2 text-[13px] font-semibold text-white">
-          <ShieldCheck className="h-4 w-4 text-leaf-400" /> Local demo mode
+          <ShieldCheck className="h-4 w-4 text-leaf-400" /> {IS_STATIC ? 'Online demo' : 'Local demo mode'}
         </div>
         <p className="mt-1.5 text-[12px] leading-relaxed text-zinc-500">
-          Single demo profile, no login. Data stays in <span className="font-mono text-zinc-400">ecotrack.db</span> on this computer.
+          {IS_STATIC
+            ? <>Runs fully in your browser: same calculator and trained Random Forest, records saved in this browser only. The full version uses Flask + SQLite.</>
+            : <>Single demo profile, no login. Data stays in <span className="font-mono text-zinc-400">ecotrack.db</span> on this computer.</>}
         </p>
         <div className="mt-3"><StatusPill status={status} /></div>
       </div>
